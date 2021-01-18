@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
 import 'dile-pages/dile-pages.js';
 import './views/view-login';
+import './views/view-home';
 
 export class PwaLitLogin extends LitElement {
   static get properties() {
@@ -52,7 +53,10 @@ export class PwaLitLogin extends LitElement {
             @email="${this._setEmail}">
           </view-login>
           <view-home 
-            name="home">
+            name="home" 
+            @navigate-to="${this.navigateTo}" 
+            diffTime="${this.diffTime}"
+            email="${this.email}">
           </view-home>
         </dile-pages>
       </main>
