@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
 import 'dile-pages/dile-pages.js';
-import './views/view-login';
-import './views/view-home';
+import './views/view-login.js';
+import './views/view-home.js';
 
 export class PwaLitLogin extends LitElement {
   static get properties() {
@@ -76,7 +76,7 @@ export class PwaLitLogin extends LitElement {
    * @param {Object} event
    */
   _getDiffTime(e) {
-    const lastConnection = e.detail.lastConnection;
+    const { lastConnection } = e.detail;
     if (lastConnection) {
       const date = new Date();
       this.diffTime =  Math.abs(date) - lastConnection;
