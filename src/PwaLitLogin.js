@@ -2,10 +2,12 @@ import { LitElement, html, css } from 'lit-element';
 import 'dile-pages/dile-pages.js';
 import './views/view-login';
 
-export class PwaLogin extends LitElement {
+export class PwaLitLogin extends LitElement {
   static get properties() {
     return {
-      selected: {type: String}
+      selected: {type: String},
+      diffTime: {type: Number},
+      email: {type: String}
     };
   }
 
@@ -44,13 +46,46 @@ export class PwaLogin extends LitElement {
       <main>
         <dile-pages selected="${this.selected}" attrforselected="name">
           <view-login 
-            name="login">
+            name="login" 
+            @navigate-to="${this.navigateTo}" 
+            @last-connection="${this._getDiffTime}"
+            @email="${this._setEmail}">
           </view-login>
+          <view-home 
+            name="home">
+          </view-home>
         </dile-pages>
-        <view-home 
-          name="home">
-        </view-home>
       </main>
     `;
+  }
+
+  /**
+   * Navigate to a page
+   * @param {Object} event
+   */
+  navigateTo(e) {
+    this.selected = e.detail.page;
+  }
+
+  /**
+   * Get the time difference between connections
+   * @param {Object} event
+   */
+  _getDiffTime(e) {
+    const lastConnection = e.detail.lastConnection;
+    if (lastConnection) {
+      const date = new Date();
+      this.diffTime =  Math.abs(date) - lastConnection;
+    } else {
+      this.diffTime = 0;
+    }
+  }
+
+  /**
+   * Set email
+   * @param {Object} event
+   */
+  _setEmail(e) {
+    this.email = e.detail;
   }
 }
