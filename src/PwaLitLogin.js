@@ -1,11 +1,17 @@
 import { LitElement, html, css } from 'lit-element';
-import { openWcLogo } from './open-wc-logo.js';
+import 'dile-pages/dile-pages.js';
+import './views/view-login';
 
-export class PwaLitLogin extends LitElement {
+export class PwaLogin extends LitElement {
   static get properties() {
     return {
-      title: { type: String },
+      selected: {type: String}
     };
+  }
+
+  constructor() {
+    super();
+    this.selected = 'login';
   }
 
   static get styles() {
@@ -21,69 +27,30 @@ export class PwaLitLogin extends LitElement {
         max-width: 960px;
         margin: 0 auto;
         text-align: center;
-        background-color: var(--pwa-lit-login-background-color);
       }
 
       main {
         flex-grow: 1;
       }
-
-      .logo > svg {
-        margin-top: 36px;
-        animation: app-logo-spin infinite 20s linear;
-      }
-
-      @keyframes app-logo-spin {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      .app-footer {
-        font-size: calc(12px + 0.5vmin);
-        align-items: center;
-      }
-
-      .app-footer a {
-        margin-left: 5px;
+      
+      view-login {
+        display: flex;
       }
     `;
-  }
-
-  constructor() {
-    super();
-    this.title = 'My app';
   }
 
   render() {
     return html`
       <main>
-        <div class="logo">${openWcLogo}</div>
-        <h1>${this.title}</h1>
-
-        <p>Edit <code>src/PwaLitLogin.js</code> and save to reload.</p>
-        <a
-          class="app-link"
-          href="https://open-wc.org/developing/#code-examples"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Code examples
-        </a>
+        <dile-pages selected="${this.selected}" attrforselected="name">
+          <view-login 
+            name="login">
+          </view-login>
+        </dile-pages>
+        <view-home 
+          name="home">
+        </view-home>
       </main>
-
-      <p class="app-footer">
-        🚽 Made with love by
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://github.com/open-wc"
-          >open-wc</a
-        >.
-      </p>
     `;
   }
 }
