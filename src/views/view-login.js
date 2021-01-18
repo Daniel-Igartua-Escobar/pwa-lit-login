@@ -46,7 +46,8 @@ export class ViewLogin extends LitElement {
           label="Email" 
           type="email" 
           validationMessage="Formato de correo no válido"
-          required>
+          required
+          autoValidate>
         </mwc-textfield>
         <mwc-textfield 
           id="password" 
@@ -55,7 +56,8 @@ export class ViewLogin extends LitElement {
           type="password" 
           validationMessage="Mínimo 8 digitos"
           helper="Mínimo 8 digitos"
-          required>
+          required
+          autoValidate>
         </mwc-textfield>
         <mwc-button @click="${this._handleLogin}" raised label="Log in"></mwc-button>
       </form>
@@ -74,11 +76,20 @@ export class ViewLogin extends LitElement {
    * Check that the user's data is valid
    */
   _handleLogin() {
-    if(this.email.checkValidity() && this.password.checkValidity()) {
-      const email = this.email.value;
-      const password = this.password.value;
-      this._login({email, password});
+    const email = this.email.value;
+    const password = this.password.value;
+
+    if(!email) {
+      this.email.reportValidity();
     }
+
+    if(!password) {
+      this.password.reportValidity();
+    }
+
+    if(this.email.checkValidity() && this.password.checkValidity()) {
+      this._login({email, password});
+    } 
   }
 
   /**
@@ -103,7 +114,18 @@ export class ViewLogin extends LitElement {
           this._dispatchEvent('email', this.email.value);
           break;
         case 302:
-          console.log('error datos incorrectos')
+          const error = res.body.error;
+          const objError = {
+            email: 'Email incorrecto',
+            password: 'Contraseña incorrecta',
+            default: 'Error'
+          }
+
+          if(error) {
+            this[error].validationMessage = objError[error];
+            this[error].value = '';
+          }
+
           break;
         default:
           break;
