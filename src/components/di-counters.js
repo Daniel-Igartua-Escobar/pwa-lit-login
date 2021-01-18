@@ -53,11 +53,11 @@ export class DiCounters extends LitElement {
       }
 
       .number {
-        font-size: 5rem;
+        font-size: 4rem;
       }
 
       .name {
-        font-size: 1.5rem;
+        font-size: 1rem;
       }
     `;
   }
