@@ -1,18 +1,20 @@
 {
   "devDependencies": {
-    "eslint": "^6.1.0",
+    "@open-wc/building-rollup": "^1.0.0",
     "@open-wc/eslint-config": "^4.2.0",
-    "prettier": "^2.0.4",
+    "@open-wc/testing": "^2.0.0",
+    "@web/dev-server": "^0.1.1",
+    "@web/test-runner": "^0.11.5",
+    "deepmerge": "^4.2.2",
+    "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.11.0",
     "husky": "^1.0.0",
     "lint-staged": "^10.0.0",
-    "@web/test-runner": "^0.11.5",
-    "@open-wc/testing": "^2.0.0",
-    "@open-wc/building-rollup": "^1.0.0",
-    "deepmerge": "^4.2.2",
+    "prettier": "^2.0.4",
     "rimraf": "^2.6.3",
     "rollup": "^2.3.4",
-    "@web/dev-server": "^0.1.1"
+    "rollup-plugin-copy": "^3.3.0",
+    "rollup-plugin-manifest-json": "^1.5.1"
   },
   "scripts": {
     "lint": "eslint --ext .js,.html . --ignore-path .gitignore && prettier \"**/*.js\" --check --ignore-path .gitignore",

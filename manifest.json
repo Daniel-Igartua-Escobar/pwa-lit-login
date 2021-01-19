@@ -3,7 +3,7 @@
   "name": "PWA Lit Di Login",
   "icons": [
     {
-      "src": "logo200.png",
+      "src": "assets/logo200.png",
       "type": "image/png",
       "sizes": "200x200"
     }
