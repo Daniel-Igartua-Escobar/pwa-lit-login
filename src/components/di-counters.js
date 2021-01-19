@@ -59,6 +59,17 @@ export class DiCounters extends LitElement {
       .name {
         font-size: 1rem;
       }
+
+      @media screen and (max-width: 366px) {
+
+        .number {
+          font-size: 3rem;
+        }
+  
+        .name {
+          font-size: 0.8rem;
+        }
+    }
     `;
   }
 
