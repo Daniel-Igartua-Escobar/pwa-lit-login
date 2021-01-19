@@ -102,7 +102,7 @@ export class ViewLogin extends LitElement {
    * @param {*} body
    */
   _login(body) {
-    fetch('http://localhost:3000/api/user', {
+    fetch('https://apinode2021.herokuapp.com/api/user', {
       method: 'POST',
       headers: {
         Accept: 'application/json',

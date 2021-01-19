@@ -111,7 +111,7 @@ export class ViewHome extends LitElement {
    * Send the current time to the server and manage the disconnection
    */
   _handleLogout() {
-    fetch('http://localhost:3000/api/user', {
+    fetch('https://apinode2021.herokuapp.com/api/user', {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
