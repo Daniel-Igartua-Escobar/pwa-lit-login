@@ -1,18 +1,19 @@
-<p align="center">
-  <img width="200" src="https://open-wc.org/hero.png"></img>
-</p>
+# PWA Lit Login
+Bienvenido, puedes probar mi PWA desplegada haciendo click [aquí](https://daniel-igartua-escobar.github.io/pwa-lit-login-deploy/).
+También puedes instalarla en tu escritorio o dispositivo movil pulsanso en la opción del navegador.
 
-## Open-wc Starter App
-
-[![Built with open-wc recommendations](https://img.shields.io/badge/built%20with-open--wc-blue.svg)](https://github.com/open-wc)
-
-## Quickstart
-
-To get started:
-
+## Cargar app en local
 ```bash
-npm init @open-wc
 # requires node 10 & npm 6 or higher
+
+npm install && npm start
+```
+## También puedes probar la build en local
+```bash
+# para probar la build en local
+ npm install serve -g
+ npm run build
+ serve -s dist
 ```
 
 ## Scripts
@@ -23,8 +24,12 @@ npm init @open-wc
 - `test` runs your test suite with Web Test Runner
 - `lint` runs the linter for your project
 
-## Tooling configs
+## info
+La app la he creado con la herramienta open-wc ya que me proporcionaba la base para crear mi PWA en lit-element, además de aportarme mas herramientas como un service worker.
+La parte del servidor la he creado con node y la he subido a heroku. La PWA esta desplegada en github.
 
-For most of the tools, the configuration is in the `package.json` to reduce the amount of files in your project.
+- Capturas:
 
-If you customize the configuration a lot, you can consider moving them to individual files.
+<img width="200" height="400" src="assets/login.png"></img>
+<img width="200" height="400" src="assets/contador.png"></img>
+<img width="500" height="300" src="assets/reporte.png"></img>
