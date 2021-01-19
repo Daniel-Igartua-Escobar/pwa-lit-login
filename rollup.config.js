@@ -1,8 +1,8 @@
 import merge from 'deepmerge';
 // use createSpaConfig for bundling a Single Page App
 import { createSpaConfig } from '@open-wc/building-rollup';
-import manifestJson from "rollup-plugin-manifest-json";
-import copy from 'rollup-plugin-copy'
+import manifestJson from 'rollup-plugin-manifest-json';
+import copy from 'rollup-plugin-copy';
 
 // use createBasicConfig to do regular JS to JS bundling
 // import { createBasicConfig } from '@open-wc/building-rollup';
@@ -28,24 +28,16 @@ export default merge(baseConfig, {
   input: './index.html',
   plugins: [
     manifestJson({
-        input: "./manifest.json", // Required
-        output: "",
-        minify: true,
-        manifest: {
-            short_name: "my-manifest"
-        }
+      input: './manifest.json', // Required
+      minify: true,
+      manifest: {
+        short_name: 'Di Login',
+      },
     }),
-    // copy({
-    //   assets: [
-    //     "src/assets",
-    //   ],
-    // }),
     copy({
-      targets: [
-        { src: 'assets', dest: 'dist' }
-      ]
-    })
-  ]
+      targets: [{ src: 'assets/logo200.png', dest: 'dist' }],
+    }),
+  ],
   // alternatively, you can use your JS as entrypoint for rollup and
   // optionally set a HTML template manually
   // input: './app.js',
