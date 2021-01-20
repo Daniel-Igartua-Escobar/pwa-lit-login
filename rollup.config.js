@@ -35,7 +35,7 @@ export default merge(baseConfig, {
       },
     }),
     copy({
-      targets: [{ src: 'assets/logo200.png', dest: 'dist' }],
+      targets: [{ src: 'assets', dest: 'dist' }],
     }),
   ],
   // alternatively, you can use your JS as entrypoint for rollup and
