@@ -90,14 +90,21 @@ export class ViewHome extends LitElement {
    * Convert the milliseconds and update the counter
    */
   _updateCounter() {
+    const milliseconds = {
+      days: 86400000,
+      hours: 3600000,
+      minutes: 60000,
+      seconds: 1000,
+    };
     let time = this.diffTime;
-    const days = Math.floor(time / 86400000);
+
+    const days = Math.floor(time / milliseconds.days);
     time -= days * 86400000;
-    const hours = Math.floor(time / 3600000);
+    const hours = Math.floor(time / milliseconds.hours);
     time -= hours * 3600000;
-    const minutes = Math.floor(time / 60000);
+    const minutes = Math.floor(time / milliseconds.minutes);
     time -= minutes * 60000;
-    const seconds = Math.trunc(time / 1000);
+    const seconds = Math.trunc(time / milliseconds.seconds);
     const timeSinceLastConnection = { days, hours, minutes, seconds };
 
     this.counters.forEach(counter => {
