@@ -104,10 +104,10 @@ export class PwaLitLogin extends LitElement {
 
   /**
    * Handles the state of the spinner
-   * @param {String} open
+   * @param {String} event
    */
-  _handleSpinner(state) {
-    if (state === 'open') {
+  _handleSpinner(event) {
+    if (event.detail === 'open') {
       this.spinner.open();
     } else {
       this.spinner.close();
