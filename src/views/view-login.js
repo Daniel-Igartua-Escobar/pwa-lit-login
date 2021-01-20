@@ -93,6 +93,7 @@ export class ViewLogin extends LitElement {
     }
 
     if (this.email.checkValidity() && this.password.checkValidity()) {
+      this._dispatchEvent('handle-spinner', 'open');
       this._login({ email, password });
     }
   }
@@ -131,6 +132,9 @@ export class ViewLogin extends LitElement {
       })
       .catch(err => {
         console.log(err);
+      })
+      .finally(() => {
+        this._dispatchEvent('handle-spinner', 'close');
       });
   }
 
