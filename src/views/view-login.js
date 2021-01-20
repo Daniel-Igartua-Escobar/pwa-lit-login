@@ -104,7 +104,7 @@ export class ViewLogin extends LitElement {
     }
 
     if (this.email.checkValidity() && this.password.checkValidity()) {
-      this._dispatchEvent('handle-spinner', 'open');
+      this._dispatchEvent('handler-spinner', 'open');
       this.service.login({ email, password });
     }
   }
