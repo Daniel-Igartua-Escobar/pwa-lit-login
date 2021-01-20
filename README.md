@@ -2,6 +2,17 @@
 Bienvenido, puedes probar mi PWA desplegada haciendo click [aquí](https://daniel-igartua-escobar.github.io/pwa-lit-login-deploy/).
 También puedes instalarla en tu escritorio o dispositivo movil pulsanso en la opción del navegador.
 
+Los usuarios para probar la app son:
+| Email | Contraseña |
+|---------|--------|--------|
+| usuario1@gmail.com | 12345678 |
+| usuario2@gmail.com | 12345678 |
+| usuario3@gmail.com | 12345678 |
+| usuario4@gmail.com | 12345678 |
+| usuario5@gmail.com | 12345678 |
+
+**El tiempo transcurrido entre conexiones empieza a contar desde que se pulsa logout con cada usuario. Por defecto la primera vez que se entre con
+los 3 primeros usuarios tendran 0segundos desde su última conexión.
 ## Cargar app en local
 ```bash
 # requires node 10 & npm 6 or higher
