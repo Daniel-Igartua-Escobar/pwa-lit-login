@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
 import '@material/mwc-button';
 import '../components/di-counters.js';
+import '../components/di-services.js';
 
 export class ViewHome extends LitElement {
   static get properties() {
@@ -62,11 +63,21 @@ export class ViewHome extends LitElement {
       <p>The last time you accessed was</p>
       <di-counters .counters="${this.counters}"></di-counters>
       <mwc-button
-        @click="${this._handleLogout}"
+        @click="${this._handlerLogout}"
         raised
         label="LOGOUT"
       ></mwc-button>
+      <di-services 
+        id="service"
+        @logout-success="${this._handlerLogoutSuccess}"
+        @logout-error="${this._handlerLogoutError}"
+        @logout-finally="${this._handlerLogoutFinally}">
+      </di-services>
     `;
+  }
+
+  get service() {
+    return this.shadowRoot.querySelector('#service');
   }
 
   updated(changedProperties) {
@@ -94,7 +105,7 @@ export class ViewHome extends LitElement {
       days: 86400000,
       hours: 3600000,
       minutes: 60000,
-      seconds: 1000,
+      seconds: 1000
     };
     let time = this.diffTime;
 
@@ -115,37 +126,46 @@ export class ViewHome extends LitElement {
   }
 
   /**
-   * Send the current time to the server and manage the disconnection
+   * Send the current time to the server and call service logout
    */
-  _handleLogout() {
-    fetch('https://apinode2021.herokuapp.com/api/user', {
-      method: 'PUT',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: this.email,
-        lastConnection: ViewHome._getTime(),
-      }),
-    })
-      .then(res =>
-        res.json().then(data => ({ status: res.status, body: data }))
-      )
-      .then(res => {
-        if (res.status === 200) {
-          this.dispatchEvent(
-            new CustomEvent('navigate-to', {
-              detail: {
-                page: 'login',
-              },
-            })
-          );
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  _handlerLogout() {
+    const body = {
+      email: this.email, 
+      lastConnection: ViewHome._getTime() 
+    };
+
+    this._dispatchEvent('handler-spinner', 'open');
+    this.service.logout(body);
+  }
+
+  /**
+   * Handler logout call success
+   */
+  _handlerLogoutSuccess(event) {
+    if(event.detail.status === 200) {
+      this.dispatchEvent(
+        new CustomEvent('navigate-to', {
+          detail: {
+            page: 'login',
+          },
+        })
+      );
+    }
+  }
+
+  /**
+   * Handler login call error
+   * @param {*} event 
+   */
+  _handlerLogoutError(event) {
+    console.log(event.detail.err);  // eslint-disable-line
+  }
+
+  /**
+   * Handler logout call finally
+   */
+  _handlerLogoutFinally() {
+    this._dispatchEvent('handler-spinner', 'close');
   }
 
   /**
@@ -155,6 +175,15 @@ export class ViewHome extends LitElement {
   static _getTime() {
     const date = new Date();
     return date.getTime();
+  }
+
+  /**
+   * Dispatch an event
+   * @param {String} event
+   * @param {*} detail
+   */
+  _dispatchEvent(event, detail) {
+    this.dispatchEvent(new CustomEvent(event, { detail }));
   }
 }
 

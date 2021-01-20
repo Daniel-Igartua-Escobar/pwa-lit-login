@@ -52,7 +52,7 @@ export class PwaLitLogin extends LitElement {
             @navigate-to="${this.navigateTo}"
             @last-connection="${this._getDiffTime}"
             @email="${this._setEmail}"
-            @handle-spinner="${this._handleSpinner}"
+            @handler-spinner="${this._handlerSpinner}"
           >
           </view-login>
           <view-home
@@ -60,6 +60,7 @@ export class PwaLitLogin extends LitElement {
             @navigate-to="${this.navigateTo}"
             diffTime="${this.diffTime}"
             email="${this.email}"
+            @handler-spinner="${this._handlerSpinner}"
           >
           </view-home>
         </dile-pages>
@@ -106,7 +107,7 @@ export class PwaLitLogin extends LitElement {
    * Handles the state of the spinner
    * @param {String} event
    */
-  _handleSpinner(event) {
+  _handlerSpinner(event) {
     if (event.detail === 'open') {
       this.spinner.open();
     } else {

@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit-element';
 import '@material/mwc-button';
 import '@material/mwc-textfield';
 import '@material/mwc-icon';
+import '../components/di-services.js';
 
 export class ViewLogin extends LitElement {
   static get styles() {
@@ -66,6 +67,12 @@ export class ViewLogin extends LitElement {
           label="Log in"
         ></mwc-button>
       </form>
+      <di-services 
+        id="service"
+        @login-success="${this._handlerLoginSuccess}"
+        @login-error="${this._handlerLoginError}"
+        @login-finally="${this._handlerLoginFinally}">
+      </di-services>
     `;
   }
 
@@ -77,8 +84,12 @@ export class ViewLogin extends LitElement {
     return this.shadowRoot.querySelector('#password');
   }
 
+  get service() {
+    return this.shadowRoot.querySelector('#service');
+  }
+
   /**
-   * Check that the user's data is valid
+   * Check that the user's data is valid and call service login
    */
   _handleLogin() {
     const email = this.email.value;
@@ -94,48 +105,44 @@ export class ViewLogin extends LitElement {
 
     if (this.email.checkValidity() && this.password.checkValidity()) {
       this._dispatchEvent('handle-spinner', 'open');
-      this._login({ email, password });
+      this.service.login({ email, password });
     }
   }
 
   /**
-   * Sends user data to the server and handles the response
-   * @param {*} body
+   * Handler login call success
+   * @param {*} event 
    */
-  _login(body) {
-    fetch('https://apinode2021.herokuapp.com/api/user', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    })
-      .then(res =>
-        res.json().then(data => ({ status: res.status, body: data }))
-      )
-      .then(res => {
-        switch (res.status) {
-          case 200:
-            this._dispatchEvent('last-connection', {
-              lastConnection: res.body.lastConnection,
-            });
-            this._dispatchEvent('navigate-to', { page: 'home' });
-            this._dispatchEvent('email', this.email.value);
-            break;
-          case 302:
-            this._handlErrors(res.body.error);
-            break;
-          default:
-            break;
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      })
-      .finally(() => {
-        this._dispatchEvent('handle-spinner', 'close');
-      });
+  _handlerLoginSuccess(event) {
+      switch (event.detail.status) {
+        case 200:
+          this._dispatchEvent('last-connection', {
+            lastConnection: event.detail.body.lastConnection,
+          });
+          this._dispatchEvent('navigate-to', { page: 'home' });
+          this._dispatchEvent('email', this.email.value);
+          break;
+        case 302:
+          this._handlerErrors(event.detail.body.error);
+          break;
+        default:
+          break;
+      }
+  }
+
+  /**
+   * Handler login call error
+   * @param {*} event 
+   */
+  _handlerLoginError(event) {
+    console.log(event.detail.err);  // eslint-disable-line
+  }
+
+ /**
+  * Handler login call finally
+  */
+  _handlerLoginFinally() {
+    this._dispatchEvent('handler-spinner', 'close');
   }
 
   /**
@@ -147,16 +154,16 @@ export class ViewLogin extends LitElement {
     this.dispatchEvent(new CustomEvent(event, { detail }));
   }
 
-  _handlErrors(error) {
+  /**
+   * Manages errors in the success call
+   * @param {String} error
+   */
+  _handlerErrors(error) {
     const objError = {
       email: 'Email incorrecto',
       password: 'Contraseña incorrecta',
     };
 
-    /**
-     * Manages the error of the login call
-     * @param {String} error
-     */
     if (error) {
       this[error].validationMessage = objError[error];
       this[error].value = '';
