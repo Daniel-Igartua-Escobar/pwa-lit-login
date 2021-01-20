@@ -4,7 +4,7 @@ También puedes instalarla en tu escritorio o dispositivo movil pulsanso en la o
 
 Los usuarios para probar la app son:
 | Email | Contraseña |
-|---------|--------|--------|
+|---------|--------|
 | usuario1@gmail.com | 12345678 |
 | usuario2@gmail.com | 12345678 |
 | usuario3@gmail.com | 12345678 |
